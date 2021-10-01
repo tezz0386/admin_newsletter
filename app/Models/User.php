@@ -21,8 +21,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'conatct_no',
+        'address',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -50,7 +53,7 @@ class User extends Authenticatable
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'name'
             ]
         ];
     }

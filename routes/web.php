@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Admin\SubscriberController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +17,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->name('index');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.dashboard');
+
+
+Route::group(['prefix'=>'admin', 'middleware'=>'role:admin'], function(){
+	Route::get('/', [HomeController::class, 'index']);
+	Route::get('/home', [HomeController::class, 'index'])->name('admin.dashboard');
+	Route::post('/home/test-mail', [SubscriberController::class, 'sendMail'])->name('test-mail');
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
