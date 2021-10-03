@@ -29,11 +29,6 @@ class SubscriberController extends Controller
 
     public function sendMail()
     {
-
-
-        $job = (new SendQueueEmail($this->getDetails()))
-                ->delay(now()->addSeconds(1));
-            dispatch($job);
         echo "Mail send successfully !!";
         
     }
